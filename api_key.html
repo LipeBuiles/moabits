@@ -13,6 +13,9 @@
             <div class="col-md-6">
                 <div class="input-group">
                     <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+                    <button id="clearButton" class="btn btn-outline-secondary" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
                     <button id="searchButton" class="btn btn-primary">
                         <i class="fas fa-search"></i>
                     </button>
@@ -44,6 +47,8 @@
             const searchInput = document.getElementById('searchInput');
             const searchButton = document.getElementById('searchButton');
             const paginationElement = document.getElementById('pagination');
+
+            const clearButton = document.getElementById('clearButton');
 
             let data = [];
             let currentPage = 1;
@@ -127,6 +132,18 @@
                 if (event.key === 'Enter') {
                     performSearch();
                 }
+            });
+
+                        searchInput.addEventListener('input', () => {
+                clearButton.style.display = searchInput.value ? 'block' : 'none';
+            });
+
+            clearButton.addEventListener('click', () => {
+                searchInput.value = '';
+                clearButton.style.display = 'none';
+                currentPage = 1;
+                renderTable(data, currentPage);
+                setupPagination(data);
             });
 
             fetchData();
