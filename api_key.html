@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Keys</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input type="text" id="searchInput" class="form-control" placeholder="Search...">
+                    <button id="searchButton" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Label</th>
+                    <th>User</th>
+                    <th>Status</th>
+                    <th>Initial Date</th>
+                    <th>Final Date</th>
+                </tr>
+            </thead>
+            <tbody id="apiKeysTableBody">
+            </tbody>
+        </table>
+        <nav>
+            <ul class="pagination justify-content-center" id="pagination">
+            </ul>
+        </nav>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const tableBody = document.getElementById('apiKeysTableBody');
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            const paginationElement = document.getElementById('pagination');
+
+            let data = [];
+            let currentPage = 1;
+            const rowsPerPage = 10;
+
+            async function fetchData() {
+                try {
+                    const response = await fetch('data_api_key.json');
+                    const jsonData = await response.json();
+                    data = jsonData.content;
+                    renderTable(data, currentPage);
+                    setupPagination(data);
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            }
+
+            function renderTable(dataToRender, page) {
+                tableBody.innerHTML = '';
+                const start = (page - 1) * rowsPerPage;
+                const end = start + rowsPerPage;
+                const paginatedData = dataToRender.slice(start, end);
+
+                paginatedData.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.label}</td>
+                        <td>${item.user}</td>
+                        <td>${item.statusName}</td>
+                        <td>${item.initialDate}</td>
+                        <td>${item.finalDate || ''}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+            }
+
+            function setupPagination(dataToPaginate) {
+                paginationElement.innerHTML = '';
+                const pageCount = Math.ceil(dataToPaginate.length / rowsPerPage);
+
+                for (let i = 1; i <= pageCount; i++) {
+                    const li = document.createElement('li');
+                    li.className = 'page-item';
+                    if (i === currentPage) {
+                        li.classList.add('active');
+                    }
+                    const a = document.createElement('a');
+                    a.className = 'page-link';
+                    a.href = '#';
+                    a.innerText = i;
+                    a.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        currentPage = i;
+                        renderTable(dataToPaginate, currentPage);
+                        
+                        // Update active state
+                        document.querySelectorAll('.pagination .page-item').forEach(item => {
+                            item.classList.remove('active');
+                        });
+                        li.classList.add('active');
+                    });
+                    li.appendChild(a);
+                    paginationElement.appendChild(li);
+                }
+            }
+
+            function performSearch() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const filteredData = data.filter(item => {
+                    return Object.values(item).some(value => {
+                        return value && value.toString().toLowerCase().includes(searchTerm);
+                    });
+                });
+                currentPage = 1;
+                renderTable(filteredData, currentPage);
+                setupPagination(filteredData);
+            }
+
+            searchButton.addEventListener('click', performSearch);
+            searchInput.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    performSearch();
+                }
+            });
+
+            fetchData();
+        });
+    </script>
+</body>
+</html>
