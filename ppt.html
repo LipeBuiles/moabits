@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orion 4.0 Moabits - Flujo de Conectividad</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes flow-line {
+            0% { stroke-dashoffset: 100; }
+            100% { stroke-dashoffset: 0; }
+        }
+        .flow-active {
+            stroke-dasharray: 10;
+            animation: flow-line 2s linear infinite;
+        }
+        .step-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .step-card:hover {
+            transform: translateY(-5px);
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-900">
+
+    <div class="max-w-6xl mx-auto px-4 py-10">
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-4">
+            <div>
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="bg-blue-600 text-white text-[10px] font-bold px-2 py-1 rounded">MOABITS</span>
+                    <h2 class="text-blue-900 font-bold tracking-tight">ORION 4.0</h2>
+                </div>
+                <h1 class="text-3xl font-black text-slate-800 tracking-tight">Sistema de Conectividad Global</h1>
+            </div>
+            <div class="bg-white px-4 py-2 rounded-xl shadow-sm border border-slate-200 flex items-center gap-3">
+                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                <span class="text-xs font-semibold text-slate-600">Servidor Operativo</span>
+            </div>
+        </header>
+
+        <!-- Diagrama de Flujo Principal -->
+        <div class="bg-white rounded-3xl p-10 shadow-xl border border-slate-100 mb-8 overflow-x-auto no-scrollbar">
+            <div class="flex items-center justify-between min-w-[950px] relative">
+                
+                <!-- Step 1: Inventario -->
+                <div id="node-0" class="step-card w-56 p-5 rounded-2xl border-2 border-slate-200 bg-slate-50 cursor-pointer" onclick="selectStep(0)">
+                    <div class="w-10 h-10 bg-slate-200 text-slate-600 rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+                    </div>
+                    <h3 class="font-bold text-sm mb-1">Inventario</h3>
+                    <p class="text-[10px] text-slate-500">ICCIDs en estado suspendido esperando gestión.</p>
+                </div>
+
+                <div class="flex-1 flex justify-center">
+                    <svg width="60" height="20">
+                        <line x1="0" y1="10" x2="50" y2="10" stroke="#e2e8f0" stroke-width="2" id="line-0" />
+                        <path d="M50 10 l-5 -5 m5 5 l-5 5" stroke="#e2e8f0" stroke-width="2" fill="none" />
+                    </svg>
+                </div>
+
+                <!-- Step 2: Asignación -->
+                <div id="node-1" class="step-card w-56 p-5 rounded-2xl border-2 border-indigo-100 bg-indigo-50 cursor-pointer" onclick="selectStep(1)">
+                    <div class="w-10 h-10 bg-indigo-100 text-indigo-600 rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    </div>
+                    <h3 class="font-bold text-sm mb-1 text-indigo-900">Asignación</h3>
+                    <p class="text-[10px] text-indigo-700/70">Planes con autorenovación y colas inteligentes.</p>
+                </div>
+
+                <div class="flex-1 flex justify-center">
+                    <svg width="60" height="20">
+                        <line x1="0" y1="10" x2="50" y2="10" stroke="#e2e8f0" stroke-width="2" id="line-1" />
+                        <path d="M50 10 l-5 -5 m5 5 l-5 5" stroke="#e2e8f0" stroke-width="2" fill="none" />
+                    </svg>
+                </div>
+
+                <!-- Step 3: Activación -->
+                <div id="node-2" class="step-card w-56 p-5 rounded-2xl border-2 border-amber-100 bg-amber-50 cursor-pointer" onclick="selectStep(2)">
+                    <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
+                    <h3 class="font-bold text-sm mb-1 text-amber-900">Activación</h3>
+                    <p class="text-[10px] text-amber-700/70">Estado Active mediante registro LU o CDR.</p>
+                </div>
+
+                <div class="flex-1 flex justify-center">
+                    <svg width="60" height="20">
+                        <line x1="0" y1="10" x2="50" y2="10" stroke="#e2e8f0" stroke-width="2" id="line-2" />
+                        <path d="M50 10 l-5 -5 m5 5 l-5 5" stroke="#e2e8f0" stroke-width="2" fill="none" />
+                    </svg>
+                </div>
+
+                <!-- Step 4: Monitor -->
+                <div id="node-3" class="step-card w-56 p-5 rounded-2xl border-2 border-emerald-100 bg-emerald-50 cursor-pointer" onclick="selectStep(3)">
+                    <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3 class="font-bold text-sm mb-1 text-emerald-900">Monitor y Límites</h3>
+                    <p class="text-[10px] text-emerald-700/70">Control de umbrales y expiración de planes.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Panel de Reglas -->
+            <div class="lg:col-span-2 space-y-6">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 h-full">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div id="rule-icon-bg" class="p-2 rounded-lg bg-blue-100 text-blue-600">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                        </div>
+                        <h3 id="rule-title" class="font-bold text-slate-800">Lógica Orion: Inventario</h3>
+                    </div>
+                    
+                    <ul id="rule-list" class="space-y-4">
+                        <!-- Se llena dinámicamente -->
+                    </ul>
+
+                    <div id="alert-section" class="mt-8 p-4 bg-red-50 rounded-xl border border-red-100 hidden">
+                        <div class="flex items-center gap-2 text-red-700 mb-2">
+                            <span class="text-xs font-bold uppercase tracking-wider">Triggers de Suspensión</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="bg-white px-3 py-2 rounded text-[10px] font-bold text-red-500 border border-red-100 uppercase">Límite Superado</div>
+                            <div class="bg-white px-3 py-2 rounded text-[10px] font-bold text-red-500 border border-red-100 uppercase">Plan Expirado</div>
+                            <div class="bg-white px-3 py-2 rounded text-[10px] font-bold text-red-500 border border-red-100 uppercase">Acción Manual</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terminal de Detalle SIM -->
+            <div class="bg-slate-900 rounded-2xl p-6 shadow-2xl text-white">
+                <div class="flex justify-between items-center mb-6">
+                    <span class="text-[9px] font-mono text-slate-400 tracking-widest uppercase">Detalle ICCID</span>
+                    <span id="sim-badge" class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 text-[9px] font-bold border border-emerald-500/30">ACTIVE</span>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-[8px] text-slate-500 uppercase block mb-1">ID Hardware</label>
+                        <p id="sim-iccid" class="text-sm font-mono tracking-wider">8934 0123 4567 8901 234F</p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="text-[8px] text-slate-500 uppercase block mb-1">MSISDN</label>
+                            <p class="text-xs font-semibold">+34 601 223 344</p>
+                        </div>
+                        <div>
+                            <label class="text-[8px] text-slate-500 uppercase block mb-1">Plan</label>
+                            <p class="text-xs font-semibold text-blue-400">Premium 50GB</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-800">
+                        <div class="flex justify-between text-[9px] mb-1">
+                            <span class="text-slate-400">CONSUMO</span>
+                            <span class="font-bold">12.5 / 50 GB</span>
+                        </div>
+                        <div class="w-full bg-slate-800 h-1 rounded-full overflow-hidden">
+                            <div class="bg-blue-500 h-full w-[25%]"></div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-y-3 pt-2 text-[10px]">
+                        <div><label class="text-slate-500 block">Compañía</label><span>Moabits Global</span></div>
+                        <div><label class="text-slate-500 block">Vigencia</label><span>31 Mar 2026</span></div>
+                        <div><label class="text-slate-500 block">Primer LU</label><span>12/10/2025</span></div>
+                        <div><label class="text-slate-500 block">Último CDR</label><span>Hace 2 mins</span></div>
+                    </div>
+                </div>
+
+                <button class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white text-[10px] font-bold py-2.5 rounded-lg transition-colors">
+                    GESTIONAR LÍMITES
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const stepsData = [
+            {
+                title: "Inventario Orion",
+                iconClass: "bg-slate-100 text-slate-600",
+                rules: [
+                    "Selección de una o más ICCIDs en estado 'Suspendida'.",
+                    "Validación de stock disponible para asignación inmediata.",
+                    "Preparación del entorno de conectividad 4.0."
+                ]
+            },
+            {
+                title: "Asignación de Producto",
+                iconClass: "bg-indigo-100 text-indigo-600",
+                rules: [
+                    "Asignación de planes con o sin autorenovación.",
+                    "Lógica de Encolamiento: Si ya hay un plan vigente, el nuevo se activa el primer día del mes siguiente.",
+                    "Los productos se asocian a las ICCIDs seleccionadas en lote."
+                ]
+            },
+            {
+                title: "Activación (LU/CDR)",
+                iconClass: "bg-amber-100 text-amber-600",
+                rules: [
+                    "SIM Nueva: Se mantiene 'Inactive' hasta detectar el primer consumo (CDR) o actualización de localización (LU).",
+                    "SIM Preexistente: Pasa a 'Active' de forma inmediata tras la asignación exitosa.",
+                    "Sincronización de red en tiempo real con la plataforma Moabits."
+                ]
+            },
+            {
+                title: "Monitor y Control",
+                iconClass: "bg-emerald-100 text-emerald-600",
+                rules: [
+                    "Asignación dinámica de límites de Datos y SMS por SIM.",
+                    "Umbrales Críticos: Si se supera el límite, la SIM se suspende automáticamente.",
+                    "Gestión Manual: Capacidad de subir, bajar o eliminar límites y suspender manualmente.",
+                    "Suspensión por Expiración: El sistema inhabilita el servicio al finalizar la vigencia del plan."
+                ]
+            }
+        ];
+
+        let currentStep = 0;
+
+        function selectStep(index) {
+            currentStep = index;
+            updateUI();
+        }
+
+        function updateUI() {
+            // Actualizar Nodos
+            for (let i = 0; i < 4; i++) {
+                const node = document.getElementById(`node-${i}`);
+                const line = document.getElementById(`line-${i}`);
+                
+                if (i === currentStep) {
+                    node.classList.add('ring-4', 'ring-blue-100', 'border-blue-500', 'scale-105');
+                } else {
+                    node.classList.remove('ring-4', 'ring-blue-100', 'border-blue-500', 'scale-105');
+                }
+
+                if (line) {
+                    if (i <= currentStep) {
+                        line.classList.add('flow-active');
+                        line.setAttribute('stroke', '#3b82f6');
+                    } else {
+                        line.classList.remove('flow-active');
+                        line.setAttribute('stroke', '#e2e8f0');
+                    }
+                }
+            }
+
+            // Actualizar Reglas
+            const data = stepsData[currentStep];
+            document.getElementById('rule-title').innerText = `Lógica Orion: ${data.title}`;
+            const list = document.getElementById('rule-list');
+            list.innerHTML = data.rules.map(r => `
+                <li class="flex items-start gap-3">
+                    <div class="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500"></div>
+                    <p class="text-sm text-slate-600">${r}</p>
+                </li>
+            `).join('');
+
+            const iconBg = document.getElementById('rule-icon-bg');
+            iconBg.className = `p-2 rounded-lg ${data.iconClass}`;
+
+            // Mostrar alertas solo en el último paso
+            const alert = document.getElementById('alert-section');
+            if (currentStep === 3) alert.classList.remove('hidden');
+            else alert.classList.add('hidden');
+        }
+
+        // Animación automática inicial
+        let autoPlay = setInterval(() => {
+            currentStep = (currentStep + 1) % 4;
+            updateUI();
+        }, 4000);
+
+        // Detener autoplay al interactuar
+        document.addEventListener('mousedown', () => clearInterval(autoPlay));
+
+        updateUI();
+    </script>
+</body>
+</html>
